@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 
 function Form(props) {
-  const { children, formTitle, buttonText, question, path, linkText, onSubmit } = props;
+  const { children, formTitle, buttonText, question, path, linkText, onSubmit, isValid, } = props;
 
   return (
     <section className="form">
@@ -19,13 +19,20 @@ function Form(props) {
           onSubmit={onSubmit}
         >
           <div className="form__items"> {children} </div>
-          <button type="submit" className="form__button" disabled>
+          <button
+            type="submit"
+            className="form__button"
+            disabled={!isValid}
+          >
             {buttonText}
           </button>
         </form>
         <p className="form__text">
           {question}
-          <Link to={`/${path}`} className="form__link">
+          <Link
+            to={`/${path}`}
+            className="form__link"
+          >
             {linkText}
           </Link>
         </p>

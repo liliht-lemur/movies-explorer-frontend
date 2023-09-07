@@ -13,11 +13,14 @@
   justify-content: center;
   row-gap: 16px;
   column-gap: 16px;
+  max-width: 1140px;
+  margin: 0 auto;
 }
 .cards__list-more {
   width: 100%;
   margin: 0 auto;
   padding: 60px 0 0;
+  max-width: 1140px;
 }
 .cards__button {
   width: 100%;

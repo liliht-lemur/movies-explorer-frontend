@@ -21,6 +21,10 @@
   background-color: #343434;
   transition: background-color 0.3s;
 }
+.checkbox__slider:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
 .checkbox__slider::before {
   position: absolute;
   content: "";

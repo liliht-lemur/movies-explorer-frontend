@@ -3,7 +3,7 @@
   box-sizing: border-box;
 }
 .about-me__wrapper {
-  max-width: 1280px;
+  max-width: 1140px;
   width: calc(100% - 28px);
   margin: 0 auto;
 }
@@ -109,6 +109,8 @@
   .about-me__photo {
     order: 1;
     margin: 0;
+    width: 255px;
+    height: 307px;
   }
 }
 
@@ -145,5 +147,9 @@
   .about-me__text {
     font-size: 14px;
     line-height: 22px; /* 157.143% */
+  }
+  .about-me__photo {
+    width: 270px;
+    height: 327px;
   }
 }
