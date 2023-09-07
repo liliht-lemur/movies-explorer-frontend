@@ -14,8 +14,8 @@ function Form(props) {
         <h2 className="form__title">{formTitle}</h2>
         <form
           className="form__inputs"
-          action=''
-          method=''
+          // action=''
+          // method=''
           onSubmit={onSubmit}
         >
           <div className="form__items"> {children} </div>

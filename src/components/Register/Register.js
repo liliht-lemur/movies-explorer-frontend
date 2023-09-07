@@ -34,7 +34,7 @@ function Register() {
             placeholder="Имя"
             required
             // defaultValue="Анастасия"
-            value={values.username || "Анастасия"}
+            value={values.name || "Анастасия"}
             // pattern={VALIDATION.username.pattern}
             onChange={handleChange}
             autoComplete="off"

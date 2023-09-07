@@ -33,7 +33,6 @@
   border: none;
 }
 .search__input:focus {
-  outline: none;
   border: none;
 }
 .search__submit-btn {
