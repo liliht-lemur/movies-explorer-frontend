@@ -1,0 +1,42 @@
+.authentication {
+  margin: -3px 1px 0 0;
+}
+.authentication__list {
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+.authentication__link {
+  color: #fff;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.3s linear;
+}
+.authentication__link:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+.authentication__link_type_signup {
+  color: #fff;
+}
+.authentication__link_type_signin {
+  color: #000;
+  background-color: #3ddc84;
+  margin-left: 30px;
+  padding: 8px 20px;
+  border-radius: 3px;
+}
+
+@media screen and (max-width: 320px) {
+  .authentication__link {
+    font-size: 10px;
+  }
+
+  .authentication__link_type_signin {
+    margin-left: 14px;
+    padding: 5px 12px;
+  }
+}
