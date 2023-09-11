@@ -1,32 +1,87 @@
 import './Profile.css';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext, useRef } from 'react';
+import MainApi from '../../utils/MainApi';
+import CurrentUserContext from '../../context/CurrentUserContext';
 import { Link } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
-// import { VALIDATION } from '../../utils/constants';
+import { VALIDATION, AppMessage } from '../../utils/constants';
+import Preloader from '../Preloader/Preloader';
 
-const Profile = () => {
-  const [isEditProfile, setIsEditProfile] = useState(false);
+const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
+  const userContext = useContext(CurrentUserContext);
+  const [userData, setUserData] = useState(userContext.currentUser);
+
+  const initialValues = {
+    name: userData.name,
+    email: userData.email,
+  };
+
+  const [currentError, setCurrentError] = useState('');
+  const nameInputRef = useRef(false);
+
   const {
-    values, handleChange, errors, isValid,
+    values, handleChange, errors, resetForm, isValid,
   } = useFormValidation({});
-  const userName = 'Анастасия';
+  const [isEditProfile, setIsEditProfile] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  function handleClickEditProfile(evt) {
-    evt.preventDefault();
-    setIsEditProfile(true);
-  }
-  function handleSubmit(evt) {
-    evt.preventDefault();
 
-    setIsEditProfile(false);
+
+  async function handleClickEditProfile(evt) {
+    evt.preventDefault();
+    await setIsEditProfile(true);
+    nameInputRef.current.focus();
   }
+
+
+  async function handleSubmit(evt) {
+    evt.preventDefault();
+    setCurrentError('');
+    setIsLoading(true);
+    setUserData({
+      name: values.name,
+      email: values.email,
+    });
+
+    MainApi.changeUserInfo({
+      name: values.name,
+      email: values.email,
+    })
+      .then((data) => {
+        setCurrentError('');
+        setIsEditProfile(false);
+        setInfoTooltipPopupOpen(true);
+        setTooltipSettings({
+          message: AppMessage.UPDATE_SUCCESS,
+          isSuccess: true,
+        })
+        resetForm({
+          name: data.name,
+          email: data.email,
+        })
+      })
+      .catch(async (err) => {
+        const { message } = await err.json();
+        setTooltipSettings({
+          message: AppMessage.BAD_REQUEST,
+          isSuccess: false,
+        })
+        setInfoTooltipPopupOpen(true);
+        setCurrentError(message);
+      })
+      .finally(() => setIsLoading(false))
+  }
+
+  const isButtonActive = isValid
+    && !isLoading
+    && (values.name !== initialValues.name || values.email !== initialValues.email);
 
   return (
     <main className="profile">
       <section className="profile__container">
         <form className="profile__form" name="profile" onSubmit={handleSubmit}>
-          <h3 className="profile__title">{`Привет, ${userName}!`}</h3>
+          <h3 className="profile__title">{`Привет, ${userData.name}!`}</h3>
           <div className="profile__inputs">
             <p className="profile__text">Имя</p>
             <div className="profile__value profile__value_type_name">
@@ -35,17 +90,17 @@ const Profile = () => {
                 id="name"
                 name="name"
                 type="text"
+                ref={nameInputRef}
                 minLength="2"
                 maxLength="30"
                 placeholder="Имя"
-                // defaultValue="Анастасия"
                 required
-                disabled={!isEditProfile && true}
+                disabled={isLoading || !isEditProfile}
                 autoComplete="off"
-                value={values.name || "Анастасия"}
+                value={values.name || " "}
                 onChange={handleChange}
                 errors={errors.name}
-              // pattern={VALIDATION.username.pattern}
+              // pattern={VALIDATION.name.pattern}
               />
             </div>
             <div className="profile__value profile__value_type_email">
@@ -57,10 +112,9 @@ const Profile = () => {
                 minLength="8"
                 maxLength="32"
                 placeholder="E-mail"
-                // defaultValue="pochta@pochta.ru"
                 required
-                disabled={!isEditProfile && true}
-                value={values.email || "pochta@pochta.ru"}
+                disabled={isLoading || !isEditProfile}
+                value={values.email || " "}
                 onChange={handleChange}
                 errors={errors.email}
               // pattern={VALIDATION.email.pattern}
@@ -68,18 +122,19 @@ const Profile = () => {
             </div>
             <p className="profile__text">E-mail</p>
           </div>
+          {isLoading ? <Preloader /> : ''}
           {isEditProfile ? (
             <div className="profile__button">
               {
                 <span className="profile__error">
-                  При обновлении профиля произошла ошибка.
+                  {errors.name || errors.email}
                 </span>
               }
               <button
                 className="profile__button-save"
                 type="submit"
                 aria-label="Кнопка сохранить"
-                disabled={!isValid}
+                disabled={!isButtonActive}
               >
                 Сохранить
               </button>
@@ -97,6 +152,7 @@ const Profile = () => {
               <Link
                 to="/"
                 className="profile__link"
+                onClick={signOut}
               >
                 Выйти из аккаунта
               </Link>

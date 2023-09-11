@@ -2,16 +2,22 @@ import Form from '../Form/Form';
 import useFormValidation from '../../hooks/useFormValidation';
 // import { VALIDATION } from '../../utils/constants';
 
-function Login() {
+function Login({ handleLogin, isLoading }) {
   const {
     values,
     handleChange,
+    errors,
     isValid,
   } = useFormValidation();
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    handleLogin(
+      values.email,
+      values.password,
+    );
   };
-
+  const ValidationEmail = /[a-zA-Z0-9_.]+@[a-zA-Z0-9-]+\\.[a-z]{2,}$/;
   return (
     <main>
       <Form
@@ -34,11 +40,12 @@ function Login() {
             maxLength="32"
             placeholder="E-mail"
             value={values.email || 'pochta@yandex.ru'}
-            // pattern={VALIDATION.email.pattern}
+            pattern={ValidationEmail}
             onChange={handleChange}
             autoComplete="off"
+            isLoading={isLoading}
           />
-          <span className="form__error">Что-то пошло не так...</span>
+          <span className={`form__error ${errors.email ? 'form__error_active' : ''}`} id="email-error">{errors.email}</span>
         </label>
 
         <label className="form__item">Пароль
@@ -53,8 +60,9 @@ function Login() {
             maxLength="32"
             value={values.password || ''}
             onChange={handleChange}
+            isLoading={isLoading}
           />
-          <span className="form__error">Что-то пошло не так...</span>
+          <span className={`form__error ${errors.password ? 'form__error_active' : ''}`} id="password-error">{errors.password}</span>
         </label>
       </Form>
     </main>
