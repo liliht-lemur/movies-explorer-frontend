@@ -22,11 +22,9 @@ const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
 
   const {
     values, handleChange, errors, resetForm, isValid,
-  } = useFormValidation({});
+  } = useFormValidation({ initialValues });
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-
 
   async function handleClickEditProfile(evt) {
     evt.preventDefault();
@@ -63,6 +61,9 @@ const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
       })
       .catch(async (err) => {
         const { message } = await err.json();
+
+        console.log({ message })
+
         setTooltipSettings({
           message: AppMessage.BAD_REQUEST,
           isSuccess: false,
@@ -126,7 +127,7 @@ const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
           {isEditProfile ? (
             <div className="profile__button">
               {
-                <span className="profile__error">
+                <span className={`profile__error ${errors.name || errors.email ? 'profile__error_visible' : ''}`}>
                   {errors.name || errors.email}
                 </span>
               }

@@ -92,6 +92,7 @@ const App = () => {
       })
       .catch(async (err) => {
         const { message } = await err.json();
+
         setTooltipSettings({
           message,
           isSuccess: false,
@@ -108,15 +109,12 @@ const App = () => {
     setIsLoading(true);
     await MainApi
       .register(name, email, password)
-      // registerUser({name, email, password})
       .then(() => {
         handleLogin(email, password);
       })
       .catch(async (err) => {
+        const { message } = await err.json();
 
-        console.log('Error: ', err)
-
-        const message = "Что-то пошло не так! Попробуйте ещё раз.";
         setTooltipSettings({
           message,
           isSuccess: false,
