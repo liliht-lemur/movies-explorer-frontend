@@ -15,35 +15,9 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import CurrentUserContext from '../../context/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import MainApi from '../../utils/MainApi';
-import { registerUser } from '../../utils/MainApi1';
+
 
 const App = () => {
-  // async function XXX() {
-  //   return fetch(`https://api.liliht.nomoredomains.sbs/signup`, {
-  //     method: "POST",
-  //     mode: 'no-cors',
-  //     headers: {
-  //       "Access-Control-Allow-Origin": '*',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       "name": "dd1",
-  //       "email": "zxc222@xxx.com",
-  //       "password": "12345678"
-  //     })
-  //   })
-  // }
-
-
-  // (async () => {
-  //   console.log(await (await XXX()).json())
-  // })();
-
-
-
-
-
-
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +45,8 @@ const App = () => {
           });
           setInfoTooltipPopupOpen(true);
         })
-        .finally(() => { })
+        .finally(() => {
+        })
     }
   }, [loggedIn]);
 
@@ -129,17 +104,12 @@ const App = () => {
   }
 
 
-
   const handleRegister = async (name, email, password) => {
-    console.log({ name, email, password })
-
-    // setIsLoading(true);
-    // MainApi
-    //   .register(name, email, password)
-    registerUser({ name, email, password })
-      .then((x) => {
-        console.log({ x })
-
+    setIsLoading(true);
+    await MainApi
+      .register(name, email, password)
+      // registerUser({name, email, password})
+      .then(() => {
         handleLogin(email, password);
       })
       .catch(async (err) => {
@@ -208,7 +178,7 @@ const App = () => {
           <Route
             exact path='/movies'
             element={
-              <ProtectedRoute loggedIn={loggedIn} >
+              <ProtectedRoute loggedIn={loggedIn}>
                 <>
                   <Header
                     loggedIn={loggedIn}
@@ -225,7 +195,7 @@ const App = () => {
           <Route
             exact path='/saved-movies'
             element={
-              <ProtectedRoute loggedIn={loggedIn} >
+              <ProtectedRoute loggedIn={loggedIn}>
                 <>
                   <Header
                     loggedIn={loggedIn}
@@ -242,7 +212,7 @@ const App = () => {
           <Route
             exact path='/profile'
             element={
-              <ProtectedRoute loggedIn={loggedIn} >
+              <ProtectedRoute loggedIn={loggedIn}>
                 <>
                   <Header
                     loggedIn={loggedIn}

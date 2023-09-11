@@ -9,7 +9,6 @@ class MainApi {
   async register(name, email, password) {
     return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
-      mode: "no-cors", // no-cors,
       headers: this._headers,
       body: JSON.stringify({ name, email, password }),
     }).then(this._checkRes);
@@ -18,7 +17,6 @@ class MainApi {
   async login(email, password) {
     return fetch(`${this._baseUrl}/signin`, {
       method: "POST",
-      mode: "no-cors", // no-cors,
       headers: this._headers,
       body: JSON.stringify({ email, password }),
     }).then(this._checkRes);
@@ -35,6 +33,8 @@ class MainApi {
   };
 
   async getUserInfo() {
+    console.log(this._headers);
+
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     }).then(this._checkRes);
@@ -70,7 +70,7 @@ class MainApi {
   }
 
   setToken() {
-    this._headers.authorization = `Bearer ${localStorage.getItem('jwt')}`;
+    this._headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
   }
 
   _checkRes(res) {

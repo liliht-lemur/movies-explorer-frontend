@@ -39,7 +39,7 @@ function Login({ handleLogin, isLoading }) {
             minLength="8"
             maxLength="32"
             placeholder="E-mail"
-            value={values.email || 'pochta@yandex.ru'}
+            value={values.email || ''}
             pattern={ValidationEmail}
             onChange={handleChange}
             autoComplete="off"
