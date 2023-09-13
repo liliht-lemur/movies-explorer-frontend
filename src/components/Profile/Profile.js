@@ -5,7 +5,7 @@ import MainApi from '../../utils/MainApi';
 import CurrentUserContext from '../../context/CurrentUserContext';
 import { Link } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
-import { VALIDATION, AppMessage } from '../../utils/constants';
+import { APP_MESSAGE } from '../../utils/constants';
 import Preloader from '../Preloader/Preloader';
 
 const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
@@ -51,7 +51,7 @@ const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
         setIsEditProfile(false);
         setInfoTooltipPopupOpen(true);
         setTooltipSettings({
-          message: AppMessage.UPDATE_SUCCESS,
+          message: APP_MESSAGE.MESSAGE_UPDATE_SUCCESS,
           isSuccess: true,
         })
         resetForm({
@@ -65,7 +65,7 @@ const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
         console.log({ message })
 
         setTooltipSettings({
-          message: AppMessage.BAD_REQUEST,
+          message: APP_MESSAGE.MESSAGE_BAD_REQUEST,
           isSuccess: false,
         })
         setInfoTooltipPopupOpen(true);
@@ -101,7 +101,6 @@ const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
                 value={values.name || " "}
                 onChange={handleChange}
                 errors={errors.name}
-              // pattern={VALIDATION.name.pattern}
               />
             </div>
             <div className="profile__value profile__value_type_email">
@@ -118,7 +117,6 @@ const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
                 value={values.email || " "}
                 onChange={handleChange}
                 errors={errors.email}
-              // pattern={VALIDATION.email.pattern}
               />
             </div>
             <p className="profile__text">E-mail</p>

@@ -1,6 +1,5 @@
 import Form from '../Form/Form';
 import useFormValidation from '../../hooks/useFormValidation';
-// import { VALIDATION } from '../../utils/constants';
 
 function Login({ handleLogin, isLoading }) {
   const {
@@ -17,7 +16,7 @@ function Login({ handleLogin, isLoading }) {
       values.password,
     );
   };
-  const ValidationEmail = /[a-zA-Z0-9_.]+@[a-zA-Z0-9-]+\\.[a-z]{2,}$/;
+
   return (
     <main>
       <Form
@@ -40,10 +39,8 @@ function Login({ handleLogin, isLoading }) {
             maxLength="32"
             placeholder="E-mail"
             value={values.email || ''}
-            pattern={ValidationEmail}
             onChange={handleChange}
             autoComplete="off"
-            isLoading={isLoading}
           />
           <span className={`form__error ${errors.email ? 'form__error_active' : ''}`} id="email-error">{errors.email}</span>
         </label>
@@ -60,7 +57,6 @@ function Login({ handleLogin, isLoading }) {
             maxLength="32"
             value={values.password || ''}
             onChange={handleChange}
-            isLoading={isLoading}
           />
           <span className={`form__error ${errors.password ? 'form__error_active' : ''}`} id="password-error">{errors.password}</span>
         </label>

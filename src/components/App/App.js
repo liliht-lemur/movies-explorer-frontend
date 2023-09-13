@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
-import { AppMessage } from '../../utils/constants';
+import { APP_MESSAGE } from '../../utils/constants';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Header from '../Header/Header';
@@ -29,10 +29,15 @@ const App = () => {
     isSuccess: false,
   });
   const navigate = useNavigate();
+
   useEffect(() => {
     if (loggedIn) {
       MainApi.setToken();
-      Promise.all([MainApi.getUserInfo(), MainApi.getSavedMovies()])
+      Promise
+        .all([
+          MainApi.getUserInfo(),
+          MainApi.getSavedMovies()
+        ])
         .then(([me, apiSavedMovies]) => {
           setCurrentUser(me);
           setSavedMovies(apiSavedMovies.filter((film) => film.owner === me._id));
@@ -61,7 +66,7 @@ const App = () => {
         })
         .catch((err) => {
           console.log(err);
-          signOut();
+          handleSignOut();
         });
     } else setLoggedIn(false);
   }, [navigate]);
@@ -77,15 +82,15 @@ const App = () => {
     }
   };
 
-  const handleLogin = (email, password) => {
+  const handleSingIn = (email, password) => {
     setIsLoading(true);
     MainApi
-      .login(email, password)
+      .singIn(email, password)
       .then((res) => {
         localStorage.setItem('jwt', res.token);
         setLoggedIn(true);
         setTooltipSettings({
-          message: AppMessage.SUCCESS,
+          message: APP_MESSAGE.MESSAGE_SUCCESS,
           isSuccess: true,
         });
         setInfoTooltipPopupOpen(true);
@@ -105,12 +110,12 @@ const App = () => {
   }
 
 
-  const handleRegister = async (name, email, password) => {
+  const handleSignUp = async (name, email, password) => {
     setIsLoading(true);
     await MainApi
-      .register(name, email, password)
+      .signUp(name, email, password)
       .then(() => {
-        handleLogin(email, password);
+        handleSingIn(email, password);
       })
       .catch(async (err) => {
         const { message } = await err.json();
@@ -127,7 +132,7 @@ const App = () => {
   }
 
 
-  const signOut = () => {
+  const handleSignOut = () => {
     localStorage.clear();
     setLoggedIn(false);
     setCurrentUser({});
@@ -147,7 +152,7 @@ const App = () => {
               loggedIn ?
                 <Navigate to='/movies' />
                 :
-                <Login handleLogin={handleLogin} isLoading={isLoading} />
+                <Login handleLogin={handleSingIn} isLoading={isLoading} />
             }
           />
           <Route
@@ -156,7 +161,7 @@ const App = () => {
               loggedIn ?
                 <Navigate to='/movies' />
                 :
-                <Register handleRegister={handleRegister} isLoading={isLoading} />}
+                <Register handleRegister={handleSignUp} isLoading={isLoading} />}
           />
           <Route
             exact path='/'
@@ -219,7 +224,7 @@ const App = () => {
                     handleOverlayClick={handleOverlayClick}
                   />
                   <Profile
-                    signOut={signOut}
+                    signOut={handleSignOut}
                     setTooltipSettings={setTooltipSettings}
                     setInfoTooltipPopupOpen={setInfoTooltipPopupOpen}
                   />

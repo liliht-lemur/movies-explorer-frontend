@@ -1,6 +1,5 @@
 import Form from '../Form/Form';
 import useFormValidation from '../../hooks/useFormValidation';
-// import { VALIDATION } from '../../utils/constants';
 
 function Register({ handleRegister, isLoading }) {
   const {
@@ -18,8 +17,6 @@ function Register({ handleRegister, isLoading }) {
       values.password,
     );
   };
-  // const ValidationName = /^[A-Za-zА-Яа-яЁё\-\s]+$/;
-  const ValidationEmail = /[a-zA-Z0-9_.]+@[a-zA-Z0-9-]+\\.[a-z]{2,}$/;
 
   return (
     <main>
@@ -44,7 +41,6 @@ function Register({ handleRegister, isLoading }) {
             placeholder="Имя"
             required
             value={values.name || ""}
-            // pattern={ValidationName}
             onChange={handleChange}
             autoComplete="off"
             disabled={isLoading}
@@ -64,7 +60,6 @@ function Register({ handleRegister, isLoading }) {
             placeholder="E-mail"
             required
             value={values.email || ""}
-            pattern={ValidationEmail}
             onChange={handleChange}
             autoComplete="off"
             disabled={isLoading}

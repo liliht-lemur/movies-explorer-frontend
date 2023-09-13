@@ -1,22 +1,37 @@
 import './CheckboxSwitch.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-function CheckboxSwitch() {
-  const [isShort, setIsShot] = useState(false);
-  function toggleCheckboxSwitch() {
-    setIsShot(!isShort);
-  }
+function CheckboxSwitch({ handleCheckbox }) {
+  const { pathname } = useLocation();
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleChange = () => {
+    setIsChecked(!isChecked);
+    handleCheckbox(!isChecked);
+  };
+
+  useEffect(() => {
+    if (pathname === '/movies') {
+      const storageIsShort = JSON.parse(localStorage.getItem('storageIsShort'));
+      storageIsShort && setIsChecked(storageIsShort);
+    } else {
+      setIsChecked(false);
+    }
+  }, []);
+
+
   return (
     <label className="checkbox" >
       <input
         className="checkbox__input"
         type="checkbox"
         id="checkbox"
-        onChange={toggleCheckboxSwitch}
+        checked={isChecked}
+        onChange={handleChange}
       />
       <span
-        className={` checkbox__slider ${isShort ? 'checkbox__slider_active' : ''
-          }`}
+        className="checkbox__slider"
       />
       Короткометражки
     </label>

@@ -6,7 +6,14 @@ class MainApi {
     this._headers = headers;
   }
 
-  async register(name, email, password) {
+  _checkRes(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(res);
+  }
+
+  async signUp(name, email, password) {
     return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
       headers: this._headers,
@@ -14,7 +21,7 @@ class MainApi {
     }).then(this._checkRes);
   };
 
-  async login(email, password) {
+  async singIn(email, password) {
     return fetch(`${this._baseUrl}/signin`, {
       method: "POST",
       headers: this._headers,
@@ -71,12 +78,7 @@ class MainApi {
     this._headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`;
   }
 
-  _checkRes(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(res);
-  }
+
 }
 
 const mainApi = new MainApi({
