@@ -63,6 +63,7 @@ function Register({ handleRegister, isLoading }) {
             onChange={handleChange}
             autoComplete="off"
             disabled={isLoading}
+            pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$"
           />
           <span className={`form__error ${errors.email ? 'form__error_active' : ''}`} id="email-error">{errors.email}</span>
           {/* <span className="form__error" id="email-error">{errors.email}</span> */}
