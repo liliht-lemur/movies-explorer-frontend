@@ -4,6 +4,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import React, { useState, useEffect, useContext } from 'react';
 import CurrentUserContext from '../../context/CurrentUserContext';
 import { BREAK_POINT_WIDTH, SHOW_CARD_LIMIT } from '../../utils/constants';
+import useResize from '../../hooks/useResize';
 
 
 const MoviesCardList = ({ movies }) => {
@@ -12,9 +13,8 @@ const MoviesCardList = ({ movies }) => {
 
   const [movieCardLimit, setMovieCardLimit] = useState(0);
   const [isMoreButton, setIsMoreButton] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-
+  const windowWidth = useResize();
   useEffect(() => {
     if (pathname === '/movies') {
       movies.length > movieCardLimit ? setIsMoreButton(true) : setIsMoreButton(false);
@@ -32,22 +32,6 @@ const MoviesCardList = ({ movies }) => {
       setMovieCardLimit(SHOW_CARD_LIMIT.DESKTOP);
     }
   }, [windowWidth, movies.length]);
-  useEffect(() => {
-    handleResizeWindow();
-    window.addEventListener('resize', handleResizeWindow);
-    return () => {
-      window.removeEventListener('resize', handleResizeWindow);
-    };
-  }, []);
-
-
-  let timeout = null;
-  const handleResizeWindow = () => {
-    timeout && clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      setWindowWidth(window.innerWidth)
-    }, 100);
-  };
 
   const handleMoreMovieClick = () => {
     setMovieCardLimit((current) => {

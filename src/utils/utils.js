@@ -1,17 +1,18 @@
-import { SHORT_FILMS_DURATION, IMAGES_URL, HTTP_REGEX } from './constants';
+import { URL_IMAGES, HTTP_REGEX } from './constants';
 
 const findTheMovies = (movies, keyWord, isShort) => {
   const word = keyWord.toLowerCase().trim();
 
   const searchedMovies = movies
     .filter((movie) => {
-      const ruName = movie.nameRU && movie.nameRU.toLowerCase().trim();
       const enName = movie.nameEN && movie.nameEN.toLowerCase().trim();
+      const ruName = movie.nameRU && movie.nameRU.toLowerCase().trim();
+
       return (ruName.match(word)) || (enName && enName.match(word));
     });
 
   if (isShort) {
-    return searchedMovies.filter((movie) => movie.duration <= SHORT_FILMS_DURATION);
+    return searchedMovies.filter((movie) => movie.duration <= 40);
   }
 
   return searchedMovies;
@@ -32,9 +33,9 @@ const buildMovieCard = (movies) => {
       duration: movie.duration || 60,
       year: movie.year || 2000,
       description: movie.description || 'unknown',
-      image: `${IMAGES_URL}/${movie.image.url}`,
+      image: `${URL_IMAGES}/${movie.image.url}`,
       trailerLink: movie.trailerLink,
-      thumbnail: `${IMAGES_URL}/${movie.image.url}`,
+      thumbnail: `${URL_IMAGES}/${movie.image.url}`,
       movieId: movie.id,
       nameRU: movie.nameRU || 'unknown',
       nameEN: movie.nameEN || 'unknown',

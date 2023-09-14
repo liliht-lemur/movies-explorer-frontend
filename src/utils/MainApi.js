@@ -1,4 +1,4 @@
-import { MAIN_BASE_URL } from './constants';
+import { BASE_URL_MAIN } from './constants';
 
 class MainApi {
   constructor({ baseUrl, headers }) {
@@ -82,7 +82,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: MAIN_BASE_URL,
+  baseUrl: BASE_URL_MAIN,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',

@@ -2,14 +2,16 @@ import './Navigation.css';
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import akk from '../../images/akk.svg';
+import useClose from '../../hooks/useClose';
 
-const Navigation = () => {
+const Navigation = ({ onOverlayClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleToggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  useClose(isMenuOpen, () => { setIsMenuOpen(false) });
 
   return (
-    <nav className="navigation">
+    <nav className="navigation" onClick={onOverlayClick}>
       <button className="navigation__btn-menu" type="button" onClick={handleToggleMenu}></button>
       <div className={`navigation__wrapper ${isMenuOpen ? 'navigation__wrapper_visible' : ''}`}>
         <nav className="navigation__container">
@@ -19,7 +21,8 @@ const Navigation = () => {
               <li className="navigation__list-item navigation__list-item_type_main">
                 <Link
                   to="/"
-                  className="navigation__link">
+                  className="navigation__link"
+                  onClick={() => { setIsMenuOpen(false) }}>
                   Главная
                 </Link>
               </li>
@@ -28,7 +31,8 @@ const Navigation = () => {
                   to="/movies"
                   className={({ isActive }) => `navigation__link ${isActive ? 'navigation__link_active' : ''
                     }`
-                  }>
+                  }
+                  onClick={() => { setIsMenuOpen(false) }}>
                   Фильмы
                 </NavLink>
               </li>
@@ -37,7 +41,8 @@ const Navigation = () => {
                   to="/saved-movies"
                   className={({ isActive }) => `navigation__link ${isActive ? 'navigation__link_active' : ''
                     }`
-                  }>
+                  }
+                  onClick={() => { setIsMenuOpen(false) }}>
                   Сохранённые фильмы
                 </NavLink>
               </li>
@@ -45,7 +50,8 @@ const Navigation = () => {
           </div>
           <Link
             to="/profile"
-            className="navigation__link navigation__link_type_profile">
+            className="navigation__link navigation__link_type_profile"
+            onClick={() => { setIsMenuOpen(false) }}>
             Аккаунт
             <div className="navigation__account">
               <img

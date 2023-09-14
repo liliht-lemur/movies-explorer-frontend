@@ -18,7 +18,7 @@ function CheckboxSwitch({ handleCheckbox }) {
     } else {
       setIsChecked(false);
     }
-  }, []);
+  }, [pathname]);
 
 
   return (

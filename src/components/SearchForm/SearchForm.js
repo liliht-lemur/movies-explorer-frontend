@@ -28,7 +28,7 @@ function SearchForm({ handleSubmitSearch, handleChangeCheckbox, showError, isLoa
     } else {
       setValues({ keyWord: '' });
     }
-  }, [pathname]);
+  }, [pathname, setIsValid, setValues]);
 
 
   return (
@@ -38,6 +38,7 @@ function SearchForm({ handleSubmitSearch, handleChangeCheckbox, showError, isLoa
           className="search__form"
           name="search"
           onSubmit={handleSubmit}
+          noValidate
         >
           <div className="search__form-container">
             <input

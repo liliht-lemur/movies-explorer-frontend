@@ -55,7 +55,7 @@ function Register({ handleRegister, isLoading }) {
             type="email"
             name="email"
             id="email"
-            minLength="8"
+            minLength="5"
             maxLength="32"
             placeholder="E-mail"
             required

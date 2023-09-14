@@ -1,9 +1,9 @@
-export const MOVIES_BASE_URL = 'https://api.nomoreparties.co/beatfilm-movies';
-export const MAIN_BASE_URL = 'https://api.liliht.nomoredomains.sbs';
-export const IMAGES_URL = 'https://api.nomoreparties.co';
+export const BASE_URL_MOVIES = 'https://api.nomoreparties.co/beatfilm-movies';
+export const BASE_URL_MAIN = 'https://api.liliht.nomoredomains.sbs';
+export const URL_IMAGES = 'https://api.nomoreparties.co';
 
-export const SHORT_FILMS_DURATION = 40;
-export const HTTP_REGEX = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+export const HTTP_REGEX = /^((ftp|http|https):\/\/)?(www\.)?([A-Za-zА-Яа-я0-9]{1}[A-Za-zА-Яа-я0-9-]*\.?)*\.{1}[A-Za-zА-Яа-я0-9-]{2,8}(\/([\w#!:.?+=&%@!\-/])*)$/;
+export const EMAIL_PATTERN = /^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$/;
 
 export const APP_MESSAGE = {
   MESSAGE_SUCCESS: 'Всё прошло успешно!',
@@ -30,8 +30,8 @@ export const SEARCH_MESSAGE = {
 };*/
 
 export const BREAK_POINT_WIDTH = {
-  MOBILE: 320,
-  TABLET: 768,
+  MOBILE: 635,
+  TABLET: 1133,
   DESKTOP: 1280,
 };
 

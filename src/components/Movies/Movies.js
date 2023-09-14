@@ -36,8 +36,8 @@ function Movies() {
         .then((allMovies) => {
           const builtMoviesPack = buildMovieCard(allMovies);
           const filteredMovies = keyWord
-              ? findTheMovies(builtMoviesPack, keyWord, isShortMovies)
-              : [];
+            ? findTheMovies(builtMoviesPack, keyWord, isShortMovies)
+            : [];
 
           localStorage.setItem('vaultAllMovies', JSON.stringify(builtMoviesPack));
           handleSearchResult(filteredMovies);
@@ -70,6 +70,9 @@ function Movies() {
     movies.length === 0
       ? setErrorMessage(SEARCH_MESSAGE.MESSAGE_NOT_FOUND)
       : setErrorMessage('');
+    // keyWord === ''
+    //   ? setErrorMessage(SEARCH_MESSAGE.MESSAGE_EMPTY)
+    //   : setErrorMessage('');
   }
   const handleToggleCheckbox = (isChecked) => {
     setIsShortMovies(isChecked);
