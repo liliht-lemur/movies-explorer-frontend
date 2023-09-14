@@ -31,11 +31,12 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedIn) {
+    const jwt = localStorage.getItem('jwt');
+    if (loggedIn && jwt) {
       MainApi.setToken();
       Promise
         .all([
-          MainApi.getUserInfo(),
+          MainApi.getUserInfo(jwt),
           MainApi.getSavedMovies()
         ])
         .then(([me, apiSavedMovies]) => {
@@ -44,6 +45,7 @@ const App = () => {
         })
         .catch(async (err) => {
           const { message } = await err.json();
+
           setTooltipSettings({
             message,
             isSuccess: false,
@@ -58,17 +60,11 @@ const App = () => {
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
-      MainApi
-        .checkToken(jwt)
-        .then((res) => {
-          setCurrentUser(res);
-          setLoggedIn(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          handleSignOut();
-        });
-    } else setLoggedIn(false);
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+      handleSignOut();
+    };
   }, [navigate]);
 
   const closeAllPopups = () => {
@@ -109,7 +105,6 @@ const App = () => {
       });
   }
 
-
   const handleSignUp = async (name, email, password) => {
     setIsLoading(true);
     await MainApi
@@ -130,7 +125,6 @@ const App = () => {
         setIsLoading(false);
       });
   }
-
 
   const handleSignOut = () => {
     localStorage.clear();

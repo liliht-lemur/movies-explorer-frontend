@@ -11,6 +11,7 @@ function Register({ handleRegister, isLoading }) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
     handleRegister(
       values.name,
       values.email,
@@ -44,9 +45,9 @@ function Register({ handleRegister, isLoading }) {
             onChange={handleChange}
             autoComplete="off"
             disabled={isLoading}
+            pattern="^[A-Za-zА-Яа-яЁё\-\s]+$"
           />
           <span className={`form__error ${errors.name ? "form__error_active" : ''}`} id="username-error">{errors.name}</span>
-          {/* <span className="form__error" id="username-error">{errors.name}</span> */}
         </label>
 
         <label className="form__item">E-mail
@@ -66,7 +67,6 @@ function Register({ handleRegister, isLoading }) {
             pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$"
           />
           <span className={`form__error ${errors.email ? 'form__error_active' : ''}`} id="email-error">{errors.email}</span>
-          {/* <span className="form__error" id="email-error">{errors.email}</span> */}
         </label>
 
         <label className="form__item">Пароль

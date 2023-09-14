@@ -67,13 +67,11 @@ function Movies() {
     setSearchedMovies(movies);
     localStorage.setItem('vaultSearchResult', JSON.stringify(movies));
 
-    movies.length === 0
+    !movies.length
       ? setErrorMessage(SEARCH_MESSAGE.MESSAGE_NOT_FOUND)
       : setErrorMessage('');
-    // keyWord === ''
-    //   ? setErrorMessage(SEARCH_MESSAGE.MESSAGE_EMPTY)
-    //   : setErrorMessage('');
   }
+
   const handleToggleCheckbox = (isChecked) => {
     setIsShortMovies(isChecked);
     localStorage.setItem('vaultIsShort', isChecked);

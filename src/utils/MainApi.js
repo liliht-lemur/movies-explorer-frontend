@@ -28,8 +28,7 @@ class MainApi {
       body: JSON.stringify({ email, password }),
     }).then(this._checkRes);
   };
-
-  async checkToken(jwt) {
+  async getUserInfo(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: {
@@ -38,12 +37,6 @@ class MainApi {
       },
     }).then(this._checkRes);
   };
-
-  async getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
-    }).then(this._checkRes);
-  }
 
   async changeUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {

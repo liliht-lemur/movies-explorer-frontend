@@ -15,11 +15,6 @@ const MoviesCard = ({ movie, saveStatus }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { nameRU, trailerLink, thumbnail, duration } = movie;
 
-  // function handleSavedToggle(evt) {
-  //   evt.target.classList.toggle('card__button_active');
-  //   setIsSavedMovie(!isSavedMovie);
-  // }
-
   useEffect(() => {
     setIsSaved(saveStatus.isSaved);
     setMainApiId(saveStatus.id);
@@ -39,22 +34,31 @@ const MoviesCard = ({ movie, saveStatus }) => {
 
   const handleDeleteMovie = () => {
     setIsLoading(true);
+
     MainApi.deleteMovie(mainApiId)
       .then(() => {
         setSavedMovies(savedMovies.filter((data) => {
           return !(data._id === mainApiId);
         }));
         setIsSaved(false);
-
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
   };
 
-  function handleRemoveMovie(evt) {
-    handleDeleteMovie(isSaved._id);
-    evt.target.classList.toggle('card__button_active');
-  }
+  const handleRemoveMovie = (evt) => {
+    MainApi.deleteMovie(mainApiId)
+      .then(() => {
+        setSavedMovies(savedMovies.filter((data) => {
+          return !(data._id === mainApiId);
+        }));
+        setIsSaved(false);
+      })
+      .then(() => {
+        evt.target.classList.toggle('card__button_active');
+      })
+      .catch((err) => console.log(err))
+  };
 
 
   return (
@@ -82,7 +86,8 @@ const MoviesCard = ({ movie, saveStatus }) => {
           pathname !== '/saved-movies'
           && (isSaved ? (
             <button
-              className={`card__button card__button_save ${isSaved && savedMovies ? 'card__button_active' : ''}`}
+              // className={`card__button card__button_save ${isSaved && savedMovies ? 'card__button_active' : ''}`}
+              className={`card__button card__button_save ${savedMovies ? 'card__button_active' : ''}`}
               type="button"
               aria-label="Сохранён"
               onClick={handleRemoveMovie}

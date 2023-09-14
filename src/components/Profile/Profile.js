@@ -62,8 +62,6 @@ const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
       .catch(async (err) => {
         const { message } = await err.json();
 
-        console.log({ message })
-
         setTooltipSettings({
           message: APP_MESSAGE.MESSAGE_BAD_REQUEST,
           isSuccess: false,
@@ -101,6 +99,7 @@ const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
                 value={values.name || " "}
                 onChange={handleChange}
                 errors={errors.name}
+                pattern="^[A-Za-zА-Яа-яЁё\-\s]+$"
               />
             </div>
             <div className="profile__value profile__value_type_email">
@@ -117,6 +116,7 @@ const Profile = ({ signOut, setTooltipSettings, setInfoTooltipPopupOpen }) => {
                 value={values.email || " "}
                 onChange={handleChange}
                 errors={errors.email}
+                pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$"
               />
             </div>
             <p className="profile__text">E-mail</p>
