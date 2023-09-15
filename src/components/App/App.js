@@ -32,6 +32,7 @@ const App = () => {
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
+
     if (loggedIn && jwt) {
       MainApi.setToken();
       Promise
@@ -59,13 +60,23 @@ const App = () => {
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-      handleSignOut();
-    };
-  }, [navigate]);
+
+    if (jwt && !Object.keys(currentUser).length) {
+      MainApi.getUserInfo(jwt)
+        .then((response) => {
+          setLoggedIn(true);
+          setCurrentUser({
+            email: response.email,
+            name: response.name
+          });
+        })
+        .catch(err => {
+          console.log(err)
+
+          handleSignOut();
+        })
+    }
+  }, [navigate, currentUser]);
 
   const closeAllPopups = () => {
     setInfoTooltipPopupOpen(false);
