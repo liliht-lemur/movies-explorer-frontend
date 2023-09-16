@@ -13,8 +13,8 @@ function CheckboxSwitch({ handleCheckbox }) {
 
   useEffect(() => {
     if (pathname === '/movies') {
-      const storageIsShort = JSON.parse(localStorage.getItem('storageIsShort'));
-      storageIsShort && setIsChecked(storageIsShort);
+      const vaultIsShort = JSON.parse(localStorage.getItem('vaultIsShort'));
+        vaultIsShort && setIsChecked(vaultIsShort);
     } else {
       setIsChecked(false);
     }

@@ -22,8 +22,9 @@ function SearchForm({ handleSubmitSearch, handleChangeCheckbox, showError, isLoa
   }
   useEffect(() => {
     if (pathname === '/movies') {
-      const storageKeyWord = localStorage.getItem('storageKeyWord');
-      storageKeyWord && setValues({ keyWord: storageKeyWord });
+      const vaultKeyWord = localStorage.getItem('vaultKeyWord');
+
+      vaultKeyWord && setValues({ keyWord: vaultKeyWord });
       setIsValid(true);
     } else {
       setValues({ keyWord: '' });
@@ -75,4 +76,5 @@ function SearchForm({ handleSubmitSearch, handleChangeCheckbox, showError, isLoa
     </section>
   );
 }
+
 export default SearchForm;
